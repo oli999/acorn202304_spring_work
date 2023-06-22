@@ -20,6 +20,7 @@
 			<li><a href="${pageContext.request.contextPath }/users/loginform">로그인</a></li>
 			<li><a href="${pageContext.request.contextPath }/users/logout">로그아웃</a></li>
 			<li><a href="${pageContext.request.contextPath }/users/info">개인정보(로그인필요)</a></li>
+			<li><a href="${pageContext.request.contextPath }/file/insertform">파일 업로드 테스트</a></li>
 		</ul>
 		<h2>공지사항</h2>
 		<ul>
