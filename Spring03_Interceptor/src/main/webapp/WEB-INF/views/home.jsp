@@ -19,6 +19,7 @@
 			<li><a href="${pageContext.request.contextPath }/play">놀러가기</a></li>
 			<li><a href="${pageContext.request.contextPath }/users/loginform">로그인</a></li>
 			<li><a href="${pageContext.request.contextPath }/users/logout">로그아웃</a></li>
+			<li><a href="${pageContext.request.contextPath }/users/info">개인정보(로그인필요)</a></li>
 		</ul>
 		<h2>공지사항</h2>
 		<ul>
