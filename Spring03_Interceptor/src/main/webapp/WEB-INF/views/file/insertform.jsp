@@ -6,6 +6,17 @@
 <head>
 <meta charset="UTF-8">
 <title>/views/file/insertform.jsp</title>
+<style>
+	#profileForm{
+		display: none;
+	}
+	#profileLink img{
+		width: 200px;
+		height: 200px;
+		border: 1px solid red;
+		border-radius: 50%;
+	}
+</style>
 </head>
 <body>
 	<div class="container">
@@ -40,8 +51,35 @@
 		</form>
 		<br>
 		<div id="imageWrapper"></div>
+		<div>
+			<a id="profileLink" href="javascript:">
+				프로필
+			</a>
+		</div>
+		<form action="${pageContext.request.contextPath }/image/upload" 
+			method="post" enctype="multipart/form-data" 
+			id="profileForm">
+			이미지 <input id="file" type="file" name="image" accept=".jpg, .jpeg, .JPG, .JPEG, .gif, .png, .PNG">
+		</form>
+		
 		<script src="${pageContext.request.contextPath }/resources/js/gura_util.js"></script>
 		<script>
+			//프로필 링크를 눌렀을때 실행할 함수 등록
+			document.querySelector("#profileLink").addEventListener("click", ()=>{
+				// input type="file" 을 강제 클릭해서 파일 선택창 띄우기
+				document.querySelector("#file").click();
+			});
+			//실제로 파일을 선택을 했을때 (change 이벤트가 발생한다) 실행할 함수 등록 
+			document.querySelector("#file").addEventListener("change", ()=>{
+				// 폼에 입력한 (선택한파일) 내용을 ajax 로 제출하기
+				const form=document.querySelector("#profileForm");
+				ajaxFormPromise(form)
+				.then(res=>res.json())
+				.then(data=>{
+					const imgString=`<img src="${pageContext.request.contextPath }\${data.imagePath}">`;
+					document.querySelector("#profileLink").innerHTML=imgString;
+				});
+			});
 		
 			document.querySelector("#uploadForm").addEventListener("submit", (e)=>{
 				//폼 전송 막기 
