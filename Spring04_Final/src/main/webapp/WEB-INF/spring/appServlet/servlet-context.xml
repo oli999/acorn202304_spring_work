@@ -6,6 +6,24 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+	
+	<!-- MyBatis 기반으로 DB 연동하기 위한 설정 -->
+	<beans:bean id="dataSource" 
+		class="org.springframework.jndi.JndiObjectFactoryBean">
+		<beans:property name="jndiName" value="java:comp/env/jdbc/myoracle"/>
+	</beans:bean>
+	
+	<beans:bean id="sessionFactory" 
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<beans:property name="dataSource" ref="dataSource"/>
+		<beans:property name="configLocation" value="classpath:Configuration.xml"/>
+	</beans:bean>
+
+	<beans:bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+		<beans:constructor-arg name="sqlSessionFactory" 
+			ref="sessionFactory"/>
+	</beans:bean>
+
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
