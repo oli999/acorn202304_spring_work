@@ -19,6 +19,23 @@ public class UsersController {
 	@Autowired
 	private UsersService service;
 	
+	//비밀번호 수정 요청 처리 
+	@RequestMapping("/users/pwd_update")
+	public ModelAndView pwdUpdate(UsersDto dto, ModelAndView mView, HttpSession session) {
+		//서비스에 필요한 객체의 참조값을 전달해서 비밀번호 수정 로직을 처리한다.
+		service.updateUserPwd(session, dto, mView);
+		//view page 로 forward 이동해서 작업 결과를 응답한다.
+		mView.setViewName("users/pwd_update");
+		return mView;
+	}		
+	
+	//비밀번호 수정폼 요청 처리
+	@RequestMapping("/users/pwd_updateform")
+	public String pwdUpdateForm() {
+	
+		return "users/pwd_updateform";
+	}	
+	
 	//개인 정보 보기 요청 처리 
 	@RequestMapping("/users/info")
 	public ModelAndView info(HttpSession session, ModelAndView mView) {
