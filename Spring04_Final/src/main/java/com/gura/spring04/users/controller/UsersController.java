@@ -23,6 +23,15 @@ public class UsersController {
 	@Autowired
 	private UsersService service;
 	
+	@RequestMapping(value = "/users/update", method=RequestMethod.POST)
+	public ModelAndView update(UsersDto dto, HttpSession session, ModelAndView mView) {
+		//서비스를 이용해서 개인정보를 수정하고 
+		service.updateUser(dto, session);
+		//개인정보 보기로 리다일렉트 이동 시킨다
+		mView.setViewName("redirect:/users/info");
+		return mView;
+	}
+	
 	//ajax 프로필 사진 업로드 요청처리
 	@RequestMapping(value = "/users/profile_upload", method=RequestMethod.POST)
 	@ResponseBody

@@ -131,8 +131,12 @@ public class UsersServiceImpl implements UsersService{
 
 	@Override
 	public void updateUser(UsersDto dto, HttpSession session) {
-		// TODO Auto-generated method stub
-		
+		//로그인된 아이디 얻어오기
+		String id=(String)session.getAttribute("id");
+		//dto 에 아이디도 담기
+		dto.setId(id);
+		//dao 를 이용해서 수정반영
+		dao.update(dto);
 	}
 
 	@Override
