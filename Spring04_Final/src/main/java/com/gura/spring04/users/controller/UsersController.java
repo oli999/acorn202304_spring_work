@@ -19,6 +19,24 @@ public class UsersController {
 	@Autowired
 	private UsersService service;
 	
+	//개인 정보 보기 요청 처리 
+	@RequestMapping("/users/info")
+	public ModelAndView info(HttpSession session, ModelAndView mView) {
+		
+		service.getInfo(session, mView);
+		
+		mView.setViewName("users/info");
+		return mView;
+	}	
+	
+	
+	@RequestMapping("/users/logout")
+	public String logout(HttpSession session) {
+		//세션에서 id 라는 키값으로 저장된 값 삭제 
+		session.removeAttribute("id");
+		return "users/logout";
+	}	
+	
 	//로그인 요청 처리
 	@RequestMapping("/users/login")
 	public ModelAndView login(ModelAndView mView, UsersDto dto, String url, HttpSession session) {

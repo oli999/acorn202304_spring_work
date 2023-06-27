@@ -1,11 +1,16 @@
 package com.gura.spring04.users.service;
 
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.gura.spring04.users.dao.UsersDao;
 import com.gura.spring04.users.dto.UsersDto;
@@ -45,6 +50,40 @@ public class UsersServiceImpl implements UsersService{
 			//로그인 처리를 한다.
 			session.setAttribute("id", resultDto.getId());
 		}		
+	}
+
+	@Override
+	public void getInfo(HttpSession session, ModelAndView mView) {
+		//로그인된 아이디를 읽어온다. 
+		String id=(String)session.getAttribute("id");
+		//DB 에서 회원 정보를 얻어와서 
+		UsersDto dto=dao.getData(id);
+		//ModelAndView 객체에 담아준다.
+		mView.addObject("dto", dto);
+	}
+
+	@Override
+	public void updateUserPwd(HttpSession session, UsersDto dto, ModelAndView mView) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Map<String, Object> saveProfileImage(HttpServletRequest request, MultipartFile mFile) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void updateUser(UsersDto dto, HttpSession session) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteUser(HttpSession session, ModelAndView mView) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
