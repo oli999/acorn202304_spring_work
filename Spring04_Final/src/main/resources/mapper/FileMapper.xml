@@ -28,7 +28,7 @@
 				FROM board_file	
 				<choose>
 					<when test="title != null and orgFileName != null">
-						WHERE title LIKE  '%'||#{title}||'%' OR orgFileName LIKE '%'||#{orgFileName}||'%'          '%gura%' 
+						WHERE title LIKE  '%'||#{title}||'%' OR orgFileName LIKE '%'||#{orgFileName}||'%'
 					</when>
 					<when test="title != null">
 						WHERE title LIKE '%'||#{title}||'%'
@@ -45,7 +45,7 @@
 		FROM board_file
 		<choose>
 			<when test="title != null and orgFileName != null">
-				WHERE title LIKE  '%'||#{title}||'%' OR orgFileName LIKE '%'||#{orgFileName}||'%'          '%gura%' 
+				WHERE title LIKE  '%'||#{title}||'%' OR orgFileName LIKE '%'||#{orgFileName}||'%'
 			</when>
 			<when test="title != null">
 				WHERE title LIKE '%'||#{title}||'%'
