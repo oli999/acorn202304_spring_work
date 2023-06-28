@@ -28,9 +28,10 @@ public class FileController {
 		
 		return "file/upload_form";
 	}
-	
+	//파일 업로드 요청처리 
 	@RequestMapping("/file/upload")
 	public ModelAndView upload(FileDto dto, ModelAndView mView, HttpServletRequest request) {
+		//FileDto 에는  폼전송되는 title 과 myFile 이 들어 있다.
 		service.saveFile(dto, mView, request);
 		mView.setViewName("file/upload");
 		return mView;
@@ -38,6 +39,7 @@ public class FileController {
 	
 	@RequestMapping("/file/download")
 	public ModelAndView download(int num, ModelAndView mView) {
+		// num 은 다운로드 해줄 파일의 번호(PK)
 		service.getFileData(num, mView);
 		// 응답을 할 bean 의 이름을 설정 
 		mView.setViewName("fileDownView");
@@ -51,3 +53,10 @@ public class FileController {
 		return mView;
 	}	
 }
+
+
+
+
+
+
+
