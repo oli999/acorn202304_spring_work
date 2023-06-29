@@ -8,7 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.gura.spring04.cafe.dao.CafeCommentDao;
 import com.gura.spring04.cafe.dao.CafeDao;
+import com.gura.spring04.cafe.dto.CafeCommentDto;
 import com.gura.spring04.cafe.dto.CafeDto;
 import com.gura.spring04.exception.NotDeleteException;
 
@@ -17,6 +19,9 @@ public class CafeServiceImpl implements CafeService{
 	
 	@Autowired
 	private CafeDao cafeDao;
+	
+	@Autowired
+	private CafeCommentDao commentDao;
 	
 	//페이징 처리, 검색어 기능을 고려한 비즈니스 로직 처리를 하는 메소드 
 	@Override
@@ -189,6 +194,30 @@ public class CafeServiceImpl implements CafeService{
 		CafeDto dto=cafeDao.getData(num);
 		//request 에 담아준다.
 		request.setAttribute("dto", dto);
+	}
+
+	@Override
+	public void saveComment(HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteComment(HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateComment(CafeCommentDto dto) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void moreCommentList(HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
