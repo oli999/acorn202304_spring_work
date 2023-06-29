@@ -9,6 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @ControllerAdvice
 public class ExceptionController {
+	
 	//spring framework 가 동작하는 중에 NotDeleteException type 의 
 	//예외가 발생하면 호출되는 메소드 
 	@ExceptionHandler(NotDeleteException.class)
@@ -20,7 +21,8 @@ public class ExceptionController {
 		//view page  ( /WEB-INF/views/error/info.jsp ) 로 forward 이동해서 예외 정보 응답하기  
 		mView.setViewName("error/info");
 		return mView;
-	}	
+	}
+	
 }
 
 
