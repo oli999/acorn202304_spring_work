@@ -6,6 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>/views/cafe/detail.jsp</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" />
+</head>
 </head>
 <body>
 	<div class="container">
@@ -28,7 +30,7 @@
 			</p>
 		</c:if>
 		<h3>글 상세 보기</h3>
-		<table>
+		<table class="table table-bordered">
 			<tr>
 				<th>글번호</th>
 				<td>${dto.num }</td>
@@ -55,6 +57,7 @@
 				</td>
 			</tr>	
 		</table>
+		<%-- 로그인된 아이디와 글의 작성자가 같으면 수정, 삭제 링크를 제공한다 --%>
 		<c:if test="${sessionScope.id eq dto.writer }">
 			<a href="updateform?num=${dto.num }">수정</a>
 			<a href="javascript:" onclick="deleteConfirm()">삭제</a>
@@ -67,6 +70,7 @@
 				}
 			</script>
 		</c:if>
+	</div>
 </body>
 </html>
 
