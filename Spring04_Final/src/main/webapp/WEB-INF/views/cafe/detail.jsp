@@ -120,7 +120,7 @@
 			</p>
 		</c:if>
 		<h3>글 상세 보기</h3>
-		<table class="table table-bordered">
+		<table class="table table-bordered animate__animated animate__bounceInDown">
 			<tr>
 				<th>글번호</th>
 				<td>${dto.num }</td>
