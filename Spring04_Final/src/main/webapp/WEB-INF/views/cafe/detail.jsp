@@ -343,8 +343,8 @@
 				updateLinks[i].addEventListener("click", function(){
 					//click 이벤트가 일어난 바로 그 요소의 data-num 속성의 value 값을 읽어온다. 
 					const num=this.getAttribute("data-num"); //댓글의 글번호
+					//숨겨진 댓글 수정폼을 보이도록 한다.
 					document.querySelector("#updateForm"+num).style.display="block";
-					
 				});
 			}
 		}
@@ -424,7 +424,7 @@
 				//폼에 submit 이벤트가 일어 났을때 호출되는 함수 등록 
 				updateForms[i].addEventListener("submit", function(e){
 					//submit 이벤트가 일어난 form 의 참조값을 form 이라는 변수에 담기 
-					const form=this;
+					const form=e.target;
 					//폼 제출을 막은 다음 
 					e.preventDefault();
 					//이벤트가 일어난 폼을 ajax 전송하도록 한다.
