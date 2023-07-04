@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.gura.spring04.gallery.dto.GalleryDto;
 import com.gura.spring04.gallery.service.GalleryService;
@@ -15,6 +16,17 @@ public class GalleryController {
 	
 	@Autowired
 	private GalleryService service;
+	
+	//gallery 게시글의 num 이 parameter get 방식으로 넘어온다.
+	//detail 페이지
+	@RequestMapping(value = "/gallery/detail", method = RequestMethod.GET)
+	public ModelAndView detail(ModelAndView mView, int num) {
+		//갤러리 detail 페이지에 필요한 data를 num 으로 가져와, ModelAndView 에 저장
+		service.getDetail(mView, num);
+		mView.setViewName("gallery/detail");
+		
+		return mView;
+	}	
 	
 	//gallery 사진 업로드 & DB 저장
 	@RequestMapping(method = RequestMethod.POST, value = "/gallery/upload")
@@ -37,6 +49,14 @@ public class GalleryController {
 	@RequestMapping("/gallery/list")
 	public String getList(HttpServletRequest request) {
 		
+		service.getList(request);
+		
 		return "gallery/list";
 	}
 }
+
+
+
+
+
+
