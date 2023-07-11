@@ -35,6 +35,15 @@ public class HomeController {
 		//리턴해 준다.
 		return mView;	
 	}
+	
+	@GetMapping("/fortune2")
+	public String fortune2(HttpServletRequest request) {
+		//오늘의 운세
+		String fortuneToday="동쪽으로 가면 귀인을 만나요!";
+		request.setAttribute("fortuneToday", fortuneToday);
+		//리턴해 준다.
+		return "fortune";	
+	}
 }
 
 

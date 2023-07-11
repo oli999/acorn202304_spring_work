@@ -10,8 +10,18 @@
 <body>
 	<div class="container">
 		<p>
-			오늘의 운세 : <strong>${fortuneToday }</strong>
+			오늘의 운세 : <strong>${requestScope.fortuneToday }</strong>
 		</p>
 	</div>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
