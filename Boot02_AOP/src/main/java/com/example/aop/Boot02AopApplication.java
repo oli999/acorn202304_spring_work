@@ -4,6 +4,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 
+import com.example.aop.util.MemberDto;
+import com.example.aop.util.MemberService;
 import com.example.aop.util.Messenger;
 import com.example.aop.util.WritingUtil;
 
@@ -33,6 +35,10 @@ public class Boot02AopApplication {
 		m1.sendGreeting("안녕하세요");
 		m1.sendGreeting("똥깨야 안녕");
 		m1.sendGreeting("또 만났군요!");
+		
+		MemberService service=ctx.getBean(MemberService.class);
+		MemberDto dto=service.getMember(1);
+		System.out.println(dto.getNum()+" | "+dto.getName()+" | "+dto.getAddr());
 	}
 
 }

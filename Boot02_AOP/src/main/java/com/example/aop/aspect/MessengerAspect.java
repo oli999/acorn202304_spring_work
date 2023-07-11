@@ -28,7 +28,7 @@ public class MessengerAspect {
 		// proceed() 를 호출해야 aspect 가 적용된 메소드가 실행이된다.
 		joinPoint.proceed();
 		
-		//aspect 가 적용된 메소드가 호출 되기 직전에 할 작업은 proceed() 호출 이후에 한다.
+		//aspect 가 적용된 메소드가 리턴된 이후에 할 작업은 proceed() 호출 이후에 한다.
 		
 		System.out.println("aspect 가 적용된 메소드가 리턴 했습니다.");
 	}
@@ -49,7 +49,8 @@ public class MessengerAspect {
 		String a = (String)obj;
 
 		//조사후 아예 다른 값을 리턴해 줄수도 있다. 
-		return "놀자 놀자";
+		//return obj;
+		return "놀자놀자";
 	}	
 	
 }
