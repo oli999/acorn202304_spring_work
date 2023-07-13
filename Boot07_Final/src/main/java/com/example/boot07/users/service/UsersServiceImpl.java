@@ -3,21 +3,16 @@ package com.example.boot07.users.service;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
-
 import com.example.boot07.users.dao.UsersDao;
 import com.example.boot07.users.dto.UsersDto;
-
-
 
 @Service
 public class UsersServiceImpl implements UsersService{
@@ -57,17 +52,17 @@ public class UsersServiceImpl implements UsersService{
 	}
 
 	@Override
-	public void getInfo(HttpSession session, ModelAndView mView) {
+	public void getInfo(HttpSession session, Model model) {
 		//로그인된 아이디를 읽어온다. 
 		String id=(String)session.getAttribute("id");
 		//DB 에서 회원 정보를 얻어와서 
 		UsersDto dto=dao.getData(id);
-		//ModelAndView 객체에 담아준다.
-		mView.addObject("dto", dto);
+		//Model 객체에 담아준다.
+		model.addAttribute("dto", dto);
 	}
 
 	@Override
-	public void updateUserPwd(HttpSession session, UsersDto dto, ModelAndView mView) {
+	public void updateUserPwd(HttpSession session, UsersDto dto, Model model) {
 		//세션 영역에서 로그인된 아이디 읽어오기
 		String id=(String)session.getAttribute("id");
 		//DB 에 저장된 회원정보 얻어오기
@@ -92,10 +87,10 @@ public class UsersServiceImpl implements UsersService{
 			//로그아웃 처리
 			session.removeAttribute("id");
 		}
-		//작업의 성공여부를 ModelAndView 객체에 담아 놓는다(결국 HttpServletRequest 에 담긴다)
-		mView.addObject("isSuccess", isValid);
+		//작업의 성공여부를 Model 객체에 담아 놓는다(결국 HttpServletRequest 에 담긴다)
+		model.addAttribute("isSuccess", isValid);
 		//로그인된 아이디도 담아준다.
-		mView.addObject("id", id);		
+		model.addAttribute("id", id);
 	}
 
 	@Override
@@ -142,15 +137,15 @@ public class UsersServiceImpl implements UsersService{
 	}
 
 	@Override
-	public void deleteUser(HttpSession session, ModelAndView mView) {
+	public void deleteUser(HttpSession session, Model model) {
 		//로그인된 아이디를 얻어와서 
 		String id=(String)session.getAttribute("id");
 		//해당 정보를 DB 에서 삭제하고
 		dao.delete(id);
 		//로그아웃 처리도 한다.
 		session.removeAttribute("id");
-		//ModelAndView 객체에 탈퇴한 회원의 아이디를 담아준다.
-		mView.addObject("id", id);
+		//Model 객체에 탈퇴한 회원의 아이디를 담아준다.
+		model.addAttribute("id", id);
 	}
 
 }
