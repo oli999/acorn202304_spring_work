@@ -2,14 +2,16 @@ package com.example.boot07.cafe.service;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.ui.Model;
+
 import com.example.boot07.cafe.dto.CafeCommentDto;
 import com.example.boot07.cafe.dto.CafeDto;
 
 
 
 public interface CafeService {
-	public void getList(HttpServletRequest request);
-	public void getDetail(HttpServletRequest request);
+	public void getList(HttpServletRequest request, Model model);
+	public void getDetail(HttpServletRequest request, Model model);
 	public void saveContent(CafeDto dto);
 	public void updateContent(CafeDto dto);
 	public void deleteContent(int num, HttpServletRequest request);

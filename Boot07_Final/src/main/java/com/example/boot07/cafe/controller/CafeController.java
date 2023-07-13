@@ -8,6 +8,9 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -24,7 +27,7 @@ public class CafeController {
 	
 	
 	//댓글 수정 요청처리 (JSON 을 응답하도록 한다)
-	@RequestMapping("/cafe/comment_update")
+	@PostMapping("/cafe/comment_update")
 	@ResponseBody
 	public Map<String, Object> commentUpdate(CafeCommentDto dto){
 		service.updateComment(dto);
@@ -35,7 +38,7 @@ public class CafeController {
 	}
 	
 	//댓글 삭제 요청 처리
-	@RequestMapping("/cafe/comment_delete")
+	@GetMapping("/cafe/comment_delete")
 	@ResponseBody
 	public Map<String, Object> commentDelete(HttpServletRequest request) {
 		service.deleteComment(request);
@@ -46,7 +49,7 @@ public class CafeController {
 	}	
 	
 	//댓글 더보기 요청 처리
-	@RequestMapping("/cafe/ajax_comment_list")
+	@GetMapping("/cafe/ajax_comment_list")
 	public String commentList(HttpServletRequest request) {
 		
 		//테스트를 위해 시간 지연 시키기
@@ -62,7 +65,7 @@ public class CafeController {
 	}
 	
 	//새로운 댓글 저장 요청 처리
-	@RequestMapping("/cafe/comment_insert")
+	@PostMapping("/cafe/comment_insert")
 	public String commentInsert(HttpServletRequest request, int ref_group) {
 		//새로운 댓글을 저장하는 로직을 수행한다.
 		service.saveComment(request);
@@ -70,21 +73,20 @@ public class CafeController {
 		return "redirect:/cafe/detail?num="+ref_group;
 	}	
 	
-	
-	@RequestMapping("/cafe/list")
-	public String list(HttpServletRequest request) {
+	@GetMapping("/cafe/list")
+	public String list(HttpServletRequest request, Model model) {
 		//서비스에 HttpServletRequest 객체를 전달해서 응답에 필요한 데이타가 담기도록 하고 
-		service.getList(request);
+		service.getList(request, model);
 		//view page 로 forward 이동해서 응답하기 
 		return "cafe/list";
 	}
 	
-	@RequestMapping("/cafe/insertform")
+	@GetMapping("/cafe/insertform")
 	public String insertform() {
 		return "cafe/insertform";
 	}
 	
-	@RequestMapping("/cafe/insert")
+	@PostMapping("/cafe/insert")
 	public String insert(CafeDto dto, HttpSession session) {
 		//글 작성자는 세션에서 얻어낸다.
 		String writer=(String)session.getAttribute("id");
@@ -95,15 +97,15 @@ public class CafeController {
 		return "cafe/insert";
 	}
 	
-	@RequestMapping("/cafe/detail")
-	public String detail(HttpServletRequest request) {
+	@GetMapping("/cafe/detail")
+	public String detail(HttpServletRequest request, Model model) {
 		//서비스에 HttpServletRequest 객체를 전달해서 응답에 필요한 데이타가 담기도록 하고 
-		service.getDetail(request);
+		service.getDetail(request, model);
 		//view page 로 forward 이동해서 응답
 		return "cafe/detail";
 	}
 	
-	@RequestMapping("/cafe/delete")
+	@GetMapping("/cafe/delete")
 	public String delete(int num, HttpServletRequest request) {
 		//서비스에 삭제할 글번호와 HttpServletRequest 객체를 전달해서 해당글을 삭제 시키고 
 		service.deleteContent(num, request);
@@ -111,13 +113,13 @@ public class CafeController {
 		return "redirect:/cafe/list";
 	}
 	
-	@RequestMapping("/cafe/updateform")
+	@GetMapping("/cafe/updateform")
 	public String updateForm(HttpServletRequest request) {
 		service.getData(request);
 		return "cafe/updateform";
 	}
 	
-	@RequestMapping("/cafe/update")
+	@PostMapping("/cafe/update")
 	public String update(CafeDto dto) {
 		service.updateContent(dto);
 		return "cafe/update";

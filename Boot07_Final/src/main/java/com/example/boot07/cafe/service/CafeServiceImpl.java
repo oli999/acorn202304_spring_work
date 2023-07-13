@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import com.example.boot07.cafe.dao.CafeCommentDao;
 import com.example.boot07.cafe.dao.CafeDao;
@@ -26,7 +27,7 @@ public class CafeServiceImpl implements CafeService{
 	
 	//페이징 처리, 검색어 기능을 고려한 비즈니스 로직 처리를 하는 메소드 
 	@Override
-	public void getList(HttpServletRequest request) {
+	public void getList(HttpServletRequest request, Model model) {
 		//한 페이지에 몇개씩 표시할 것인지
 		final int PAGE_ROW_COUNT=5;
 		//하단 페이지를 몇개씩 표시할 것인지
@@ -99,20 +100,20 @@ public class CafeServiceImpl implements CafeService{
 		if(endPageNum > totalPageCount){
 			endPageNum=totalPageCount; //보정해 준다.
 		}
-		//view page 에서 필요한 값을 request 에 담아준다. 
-		request.setAttribute("pageNum", pageNum);
-		request.setAttribute("startPageNum", startPageNum);
-		request.setAttribute("endPageNum", endPageNum);
-		request.setAttribute("condition", condition);
-		request.setAttribute("keyword", keyword);
-		request.setAttribute("encodedK", encodedK);
-		request.setAttribute("totalPageCount", totalPageCount);
-		request.setAttribute("list", list);
-		request.setAttribute("totalRow", totalRow);
+		//view page 에서 필요한 값을 Model 에 담아준다. 
+		model.addAttribute("pageNum", pageNum);
+		model.addAttribute("startPageNum", startPageNum);
+		model.addAttribute("endPageNum", endPageNum);
+		model.addAttribute("condition", condition);
+		model.addAttribute("keyword", keyword);
+		model.addAttribute("encodedK", encodedK);
+		model.addAttribute("totalPageCount", totalPageCount);
+		model.addAttribute("list", list);
+		model.addAttribute("totalRow", totalRow);
 	}
 
 	@Override
-	public void getDetail(HttpServletRequest request) {
+	public void getDetail(HttpServletRequest request, Model model) {
 		//자세히 보여줄 글번호를 읽어온다. 
 		int num=Integer.parseInt(request.getParameter("num"));
 		//조회수 올리기
@@ -180,14 +181,14 @@ public class CafeServiceImpl implements CafeService{
 		//댓글 전체 페이지의 갯수
 		int totalPageCount=(int)Math.ceil(totalRow/(double)PAGE_ROW_COUNT);
 		
-		//request scope 에 글 하나의 정보 담기
-		request.setAttribute("dto", resultDto);
-		request.setAttribute("condition", condition);
-		request.setAttribute("keyword", keyword);
-		request.setAttribute("encodedK", encodedK);
-		request.setAttribute("totalRow", totalRow);
-		request.setAttribute("commentList", commentList);
-		request.setAttribute("totalPageCount", totalPageCount);
+		//Model 에 글 하나의 정보 담기
+		model.addAttribute("dto", resultDto);
+		model.addAttribute("condition", condition);
+		model.addAttribute("keyword", keyword);
+		model.addAttribute("encodedK", encodedK);
+		model.addAttribute("totalRow", totalRow);
+		model.addAttribute("commentList", commentList);
+		model.addAttribute("totalPageCount", totalPageCount);
 	}
 
 	@Override
