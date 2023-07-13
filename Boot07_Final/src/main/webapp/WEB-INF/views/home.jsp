@@ -23,7 +23,7 @@
 		</c:choose>
 		<h1>인덱스 페이지 입니다.</h1>
 		<ul>
-			
+			<li><a href="${pageContext.request.contextPath }/cafe/list">카페 글 목록보기</a></li>
 		</ul>
 		<h3>공지사항</h3>
 		<ul>
