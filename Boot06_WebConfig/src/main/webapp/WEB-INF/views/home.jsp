@@ -23,6 +23,9 @@
 		<%-- Spring Boot 에서 추가된 static 폴더에 있는 자원 사용하기 --%>
 		<img src="${pageContext.request.contextPath}/images/bottle.png"/>
 		<img src="${pageContext.request.contextPath }/images/kim1.png"/>
+		<%-- 컨트롤러에 이미지 데이터 요청하기 --%>
+		<img src="${pageContext.request.contextPath }/aaa/kim1.png"/>
+		<img src="${pageContext.request.contextPath }/aaa/kim2.png"/>
 		<ul>
 			<li><a href="${pageContext.request.contextPath }/html/hello.html">html 페이지</a></li>
 			<%-- static 폴더에는 jsp 페이지를 위치 시킬수 없다 --%>
