@@ -77,7 +77,10 @@
 			// drop 된 파일의 정보를 조사해서 이미지 파일이 아니라면 함수를 여기서 종료 시키기 
 			const type=files[0].type;
 			console.log(type);
-			if( type != "image/png" && type != "image/jpg" && type != "image/gif"){
+			//image 라는 문자열이 포함되어있는지 여부를 검사할 정규표현식
+			const reg=/image/;
+			//만일 정규표현식을 통과 하지 못했다면 
+			if(!reg.test(type)){
 				alert("이미지 파일을 drop 하세요!");
 				return;
 			}
