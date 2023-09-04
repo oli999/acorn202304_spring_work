@@ -23,9 +23,9 @@ public class Boot08ReactApplication {
 	public void initMembers() {
 		//DB 에 Sample 데이터를 저장하기 
 		List<Member> list=new ArrayList<Member>();
-		list.add(new Member(1, "김구라", "노량진"));
-		list.add(new Member(2, "해골", "행신동"));
-		list.add(new Member(3, "원숭이", "동물원"));
+		list.add(new Member(0, "김구라", "노량진"));
+		list.add(new Member(0, "해골", "행신동"));
+		list.add(new Member(0, "원숭이", "동물원"));
 		
 		repo.saveAll(list);
 	}
