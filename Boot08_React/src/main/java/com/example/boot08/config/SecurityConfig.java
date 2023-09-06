@@ -47,9 +47,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable().cors(); //react 개발환경, 모바일앱 환경에 맞는 설정 
 		http.authorizeHttpRequests().antMatchers("/auth").permitAll()   // "/auth" 요청은 인증을 요구하지 않겠다
-			.anyRequest().authenticated()
+			.anyRequest().authenticated() //나머지 요청에 대해서는 인증을 진행하겠다(token 을 체크하겠다)
 			.and().exceptionHandling()
-			.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+			.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS); //세션사용하지않음
 		// JwtFilter 가 동작하도록 등록해 준다. 
 		http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 	}

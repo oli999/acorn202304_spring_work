@@ -47,13 +47,14 @@ public class JwtUtil {
     }
  
     private String createToken(Map<String, Object> claims, String subject) {
- 
+    	//JwtBuilder 객체를 이용해서 토큰을 만든다. 
+    	
         return Jwts.builder()
-        		.setClaims(claims)
-        		.setSubject(subject)
-        		.setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
-                .signWith(SignatureAlgorithm.HS256, secret).compact();
+        		.setClaims(claims)  //토큰에 담을 추가 정보
+        		.setSubject(subject) //토큰의 주제(사용자명 or 사용자의 id) 
+        		.setIssuedAt(new Date(System.currentTimeMillis())) // 토큰 발급 시간
+                .setExpiration(new Date(System.currentTimeMillis() + 1000*60)) //토큰 무효화 되는 시간 
+                .signWith(SignatureAlgorithm.HS256, secret).compact(); // HS256 알고리즘으로 서명해서 토큰얻어내기
     }
     //토큰 유효성 여부를 리턴하는 메소드 
     public Boolean validateToken(String token, UserDetails userDetails) {
