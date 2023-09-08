@@ -8,6 +8,7 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -17,6 +18,7 @@ import com.example.boot08.users.Users;
 import com.example.boot08.users.UsersRepository;
 
 @SpringBootApplication
+@PropertySource(value = "classpath:custom.properties")
 public class Boot08ReactApplication {
 	
 	@Autowired
@@ -38,12 +40,12 @@ public class Boot08ReactApplication {
 		repo.saveAll(list);
 		
 		//DB Sample Users 담기
-		Users user1=new Users();
-		user1.setUserName("kimgura");
-		user1.setPassword(encoder.encode("1234"));
-		user1.setEmail("naver@");
-		
-		usersRepo.save(user1);
+//		Users user1=new Users();
+//		user1.setUserName("kimgura");
+//		user1.setPassword(encoder.encode("1234"));
+//		user1.setEmail("naver@");
+//		
+//		usersRepo.save(user1);
 	}
 	
 	public static void main(String[] args) {

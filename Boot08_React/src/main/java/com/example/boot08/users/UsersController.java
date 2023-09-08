@@ -12,6 +12,7 @@ import com.example.boot08.util.JwtUtil;
 
 @RestController
 public class UsersController {
+	
 	@Autowired 
 	private JwtUtil jwtUtil;
 	//SecurityConfig 에서 Bean 으로 등록한 객체 
