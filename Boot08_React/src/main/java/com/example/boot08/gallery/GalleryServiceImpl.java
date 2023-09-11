@@ -6,6 +6,10 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -58,6 +62,22 @@ public class GalleryServiceImpl implements GalleryService{
 	public List<Gallery> getList() {
 		// TODO Auto-generated method stub
 		return repo.findAllByOrderByNumDesc();
+	}
+
+	@Override
+	public Page<Gallery> getList(int page) {
+		//한페이지에 몇개씩 표시할것인지
+		int pageRowCount=8;
+		//정렬은 어떻게 할것인지 ( num 이라는 칼럼에 대해서 내림차순 정렬하는 Sort 객체)
+		Sort sort=Sort.by(Sort.Direction.DESC, "num");
+		/*
+		 *  .of(페이지 인덱스, pageRowCount, 정렬객체 )
+		 *  
+		 *  PageRequest 객체가 리턴되는데 PageRequest 는 Pageable 인터페이스를 구현한 객체 이다.
+		 */
+		Pageable pageable=PageRequest.of(page-1, pageRowCount, sort);
+		
+		return repo.findAll(pageable);
 	}
 
 }
