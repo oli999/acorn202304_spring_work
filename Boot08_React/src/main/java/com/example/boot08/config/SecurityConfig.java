@@ -28,7 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	//spring security 예외 요청 경로 셋팅 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/h2-console/**", "/hello/token", "/gallery/images/**");
+		web.ignoring().antMatchers("/h2-console/**", "/hello/token", "/gallery/images/**","/**");
 	}
 	
 	//인증 메니저 객체도 Bean 으로 만들어 주어야 한다.
