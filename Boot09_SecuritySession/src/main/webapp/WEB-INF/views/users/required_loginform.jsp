@@ -10,7 +10,7 @@
 <body>
 	<div class="container">
 		<h3>로그인이 필요 합니다.</h3>
-		<form action="/users/login" method="post">
+		<form action="/login" method="post">
 			<input type="text" name="userName" placeholder="사용자명 입력..."/>
 			<input type="text" name="password" placeholder="비밀번호 ..."/>
 			<button type="submit">로그인</button>

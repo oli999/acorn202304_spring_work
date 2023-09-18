@@ -5,15 +5,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>/home.jsp</title>
+<title>/users/login_fail.jsp</title>
 </head>
 <body>
 	<div class="container">
-		<h1>인덱스 페이지입니다</h1>
-		<a href="/users/loginform">로그인</a>
-		<ul>
-			<li><a href="/play?num=1">놀러가기</a></li>
-		</ul>
+		<p>아이디 혹은 비밀번호가 틀려요</p>
+		<a href="/users/loginform">다시시도</a>
 	</div>
 </body>
 </html>

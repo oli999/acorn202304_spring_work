@@ -26,7 +26,9 @@ public class Boot09SecuritySessionApplication {
     	String samplePwd=new BCryptPasswordEncoder().encode("1234");
         
     	List<User> list=new ArrayList<User>();
-    	list.add(new User(1, "kimgura", samplePwd, "aaa@naver.com"));
+    	list.add(new User(1, "kimgura", samplePwd, "aaa@naver.com", "ROLE_ADMIN"));
+    	list.add(new User(2, "superman", samplePwd, "aaa@naver.com", "ROLE_STAFF"));
+    	list.add(new User(3, "batman", samplePwd, "aaa@naver.com", "ROLE_USER"));
     	
         repository.saveAll(list);
     }	
