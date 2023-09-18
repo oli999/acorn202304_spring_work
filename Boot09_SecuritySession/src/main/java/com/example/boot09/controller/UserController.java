@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
+import org.apache.catalina.authenticator.SavedRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -34,9 +37,20 @@ public class UserController {
 		
 		return "users/loginform";
 	}
-	
+	@GetMapping("/users/required_loginform")
+	public String required_loginform() {
+		
+		return "users/required_loginform";
+	}
+	@GetMapping("/users/required_login")
+	public String required_login() {
+		
+		return "users/required_login";
+	}
+
 	@PostMapping("/users/login")
-	public String login(LoginRequest dto, HttpServletRequest request) throws Exception {
+	public String login(LoginRequest dto, HttpServletRequest request, SavedRequest savedRequest) throws Exception {
+		System.out.println(savedRequest.getRequestURI());
 		
 		try {
 			//입력한 id 비밀번호를 토큰에 담아서 
@@ -44,9 +58,9 @@ public class UserController {
 					new UsernamePasswordAuthenticationToken(dto.getUserName(), dto.getPassword());
 			//인증 메니저 객체를 이용해서 인증 작업을 진행한다. 
 			authManager.authenticate(token);
-		}catch(Exception e) {
-			e.printStackTrace();
-			throw new Exception("아이디 혹은 비밀번호가 틀려요");
+		}catch(BadCredentialsException bce) {
+			bce.printStackTrace();
+			return "users/login";
 		}
 		
 		UserDetails userDetails=service.loadUserByUsername(dto.getUserName());
