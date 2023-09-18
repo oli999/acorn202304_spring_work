@@ -27,17 +27,25 @@ public class SecurityConfig {
 	public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
 		//서버 시작시에 HttpSecurity 객체가 메소드의 인자로 전달되는데 해당 객체를 이용해서 Security 관련 설정을 하면 된다.
 		SecurityFilterChain chain=httpSecurity
-									.httpBasic().disable()
-									.csrf().disable()
-									.authorizeHttpRequests()
-										.antMatchers("/", "/users/loginform", "/users/login").permitAll()
-										.anyRequest().authenticated()
-										.and()
-									.logout()
-										.logoutUrl("/users/logout")
-										.logoutSuccessUrl("/")
-										.and()
-									.build();
+			.httpBasic(s->s.disable())
+			.csrf(s->s.disable())
+			.authorizeHttpRequests(s->{
+				s.antMatchers("/", "/users/loginform", "/users/login").permitAll();
+				
+				//s.antMatchers("/admin/**").hasAuthority("ROLE_ADMIN");
+				s.antMatchers("/admin/**").hasRole("ADMIN");
+				s.antMatchers("/staff/**").hasAnyRole("ADMIN", "STAFF");
+				
+				s.anyRequest().authenticated();
+			})
+			.formLogin(s->{
+				s.loginPage("/users/loginform");
+			})
+			.logout(s->{
+				s.logoutUrl("/users/logout");
+				s.logoutSuccessUrl("/");
+			})
+			.build();
 																
 		return chain;
 	}

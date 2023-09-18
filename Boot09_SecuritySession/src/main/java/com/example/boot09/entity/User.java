@@ -3,6 +3,7 @@ package com.example.boot09.entity;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,4 +20,5 @@ public class User {
 	private String userName;
 	private String password;
 	private String email;
+	private String role;
 }

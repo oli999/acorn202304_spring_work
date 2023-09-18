@@ -1,9 +1,11 @@
 package com.example.boot09.repository.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.authentication.UserServiceBeanDefinitionParser;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -28,9 +30,19 @@ public class CustomUserDetailsService implements UserDetailsService{
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		//DB 에서 username 을 이용해서 사용자 정보를 얻어온다( 이름 ,비밀번호, 이메일 , 권한 등등... ) 
 		User user=repo.findByUserName(username);
+		/*
+		 * UserDetails 객체에 부여된 권한 정보도 같이 담아 주어야 한다.
+		 * 
+		 * ROLE_XXX  => Authority
+		 * XXX => ROLE
+		 * 
+		 * ROLE_ADMIN  =>  ROLE_ADMIN 이라는 Authority 를 가지고 있다 , ADMIN 이라는  ROLE 을 가지고 있다. 
+		 */
+		List<SimpleGrantedAuthority> list=new ArrayList<>();
+		list.add(new SimpleGrantedAuthority(user.getRole()));
 		
 		UserDetails userDetails=new org.springframework.security.core.userdetails
-				.User(user.getUserName(), user.getPassword(), new ArrayList<>());
+				.User(user.getUserName(), user.getPassword(), list);
 		return userDetails;
 	}
 }
