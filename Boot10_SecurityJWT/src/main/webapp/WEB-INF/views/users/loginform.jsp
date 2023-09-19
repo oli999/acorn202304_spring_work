@@ -10,6 +10,12 @@
 <body>
 	<div class="container">
 		<h3>로그인 폼</h3>
+		<c:if test="${param.error != null}">
+		    <p>
+		        Login Error! <br />
+		        ${errMsg}
+		    </p>
+    	</c:if>
 		<form action="/login" method="post">
 			<input type="text" name="userName" placeholder="사용자명 입력..."/>
 			<input type="text" name="password" placeholder="비밀번호 ..."/>

@@ -19,6 +19,7 @@ import org.springframework.security.web.savedrequest.CookieRequestCache;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 
 import com.example.boot10.filter.JwtFilter;
+import com.example.boot10.handler.AuthFailHandler;
 import com.example.boot10.handler.AuthSuccessHandler;
 /*
  *  [ 참고 ]
@@ -51,7 +52,9 @@ import com.example.boot10.handler.AuthSuccessHandler;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+	
 	@Autowired JwtFilter jwtFilter;
+	
 	@Bean
 	public WebSecurityCustomizer webSecurityCustomizer() {
 		return (web) -> web.ignoring().antMatchers("/h2-console/**");
@@ -59,7 +62,8 @@ public class SecurityConfig {
 	
 	//SecurityFilterChain 을 bean 으로 만들어준다.
 	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity, AuthSuccessHandler successHandler) throws Exception{
+	public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity,
+			AuthSuccessHandler successHandler, AuthFailHandler failHandler) throws Exception{
 		//서버 시작시에 HttpSecurity 객체가 메소드의 인자로 전달되는데 해당 객체를 이용해서 Security 관련 설정을 하면 된다.
 		SecurityFilterChain chain=httpSecurity
 			.httpBasic(s->s.disable())
@@ -80,6 +84,7 @@ public class SecurityConfig {
 				s.usernameParameter("userName");
 				s.passwordParameter("password");
 				s.successHandler(successHandler);
+				s.failureHandler(failHandler);
 			})
 			.logout(s->{
 				s.logoutUrl("/users/logout");
@@ -98,11 +103,7 @@ public class SecurityConfig {
 	public PasswordEncoder passwordEncoder() { 
 		return new BCryptPasswordEncoder();
 	}
-	//세션이벤트 관련객체를 bean 으로 만든다.
-	@Bean
-	public HttpSessionEventPublisher httpSessionEventPublisher() {
-	    return new HttpSessionEventPublisher();
-	}
+
 	//인증 메니저 객체를 bean 으로 만든다.
 	@Bean
 	public AuthenticationManager authenticationManager(HttpSecurity http, 

@@ -11,7 +11,6 @@
 <body>
 	<p>로그인 되었습니다.</p>
 	<a href="/play">놀러가기</a>
-	${session.savedRequest }
 </body>
 </html>
 
