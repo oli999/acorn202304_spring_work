@@ -57,7 +57,7 @@ public class SecurityConfig {
 	
 	@Bean
 	public WebSecurityCustomizer webSecurityCustomizer() {
-		return (web) -> web.ignoring().antMatchers("/h2-console/**");
+		return (web) -> web.ignoring().antMatchers("/h2-console/**", "/favicon.ico");
 	}
 	
 	//SecurityFilterChain 을 bean 으로 만들어준다.
