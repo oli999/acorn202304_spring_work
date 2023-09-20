@@ -35,7 +35,7 @@ public class SecurityConfig {
 					.antMatchers("/","/users/loginform").permitAll()
 					.antMatchers("/admin/**").hasRole("ADMIN")
 					.antMatchers("/staff/**").hasAnyRole("ADMIN", "STAFF")
-					.anyRequest().authenticated()		
+					.anyRequest().authenticated()	
 			)
 			.formLogin(config->
 				config
@@ -52,7 +52,10 @@ public class SecurityConfig {
 					.logoutUrl("/users/logout")
 					.logoutSuccessUrl("/")
 					.permitAll()
-			);
+			)
+			.exceptionHandling(config->{
+				config.accessDeniedPage("/users/denied");
+			});
 														
 		return httpSecurity.build();
 	}

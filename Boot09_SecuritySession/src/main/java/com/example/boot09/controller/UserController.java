@@ -45,6 +45,11 @@ public class UserController {
 		return "users/login_success";
 	}
 	
+	@GetMapping("/users/denied")
+	public String denied() {
+		return "users/denied";
+	}
+	
 }
 
 
