@@ -65,38 +65,36 @@ public class SecurityConfig {
 	public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity,
 			AuthSuccessHandler successHandler, AuthFailHandler failHandler) throws Exception{
 		//서버 시작시에 HttpSecurity 객체가 메소드의 인자로 전달되는데 해당 객체를 이용해서 Security 관련 설정을 하면 된다.
-		SecurityFilterChain chain=httpSecurity
-			.httpBasic(s->s.disable())
-			.csrf(s->s.disable())
-			.authorizeHttpRequests(s->{
-				s.antMatchers("/", "/users/loginform", "/users/login").permitAll();
-				
-				//s.antMatchers("/admin/**").hasAuthority("ROLE_ADMIN");
-				s.antMatchers("/admin/**").hasRole("ADMIN");
-				s.antMatchers("/staff/**").hasAnyRole("ADMIN", "STAFF");
-				
-				s.anyRequest().authenticated();
-				
-			})
-			.formLogin(s->{
-				s.loginPage("/users/loginform");
-				s.loginProcessingUrl("/login");
-				s.usernameParameter("userName");
-				s.passwordParameter("password");
-				s.successHandler(successHandler);
-				s.failureHandler(failHandler);
-			})
-			.logout(s->{
-				s.logoutUrl("/users/logout");
-				s.logoutSuccessUrl("/");
-				s.deleteCookies("jwtToken");
-			})
-			.sessionManagement(s->s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+		httpSecurity
+			
+			.csrf().disable()
+			.authorizeHttpRequests(config->
+				config
+					.antMatchers("/", "/users/loginform", "/users/login").permitAll()
+					.antMatchers("/admin/**").hasRole("ADMIN")
+					.antMatchers("/staff/**").hasAnyRole("ADMIN", "STAFF")
+					.anyRequest().authenticated()
+			)
+			.formLogin(config->
+				config
+					.loginPage("/users/loginform")
+					.loginProcessingUrl("/login")
+					.usernameParameter("userName")
+					.passwordParameter("password")
+					.successHandler(successHandler)
+					.failureHandler(failHandler)
+			)
+			.logout(config->
+				config
+					.logoutUrl("/users/logout")
+					.logoutSuccessUrl("/")
+					.deleteCookies("jwtToken")
+			)
+			.sessionManagement(config->config.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 			.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
-			.requestCache(s->s.requestCache(getCookieRequestCache()))
-			.build();
+			.requestCache(config->config.requestCache(getCookieRequestCache()));
 																
-		return chain;
+		return httpSecurity.build();
 	}
 	//비밀번호를 암호화 해주는 객체를 bean 으로 만든다.
 	@Bean
