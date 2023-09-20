@@ -20,7 +20,6 @@
 
 	<br>
 	<a href="/">인덱스로</a>
-	${param.url }
 </body>
 </html>
 

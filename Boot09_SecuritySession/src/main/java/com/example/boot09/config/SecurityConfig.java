@@ -18,8 +18,7 @@ import com.example.boot09.handler.AuthSuccessHandler;
 @EnableWebSecurity
 public class SecurityConfig {
 	
-	
-	
+	//Spring Security 를 거치지 않을 요청 경로 설정 
 	@Bean
 	public WebSecurityCustomizer webSecurityCustomizer() {
 		return (web) -> web.ignoring().antMatchers("/h2-console/**");
@@ -29,32 +28,32 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
 		//서버 시작시에 HttpSecurity 객체가 메소드의 인자로 전달되는데 해당 객체를 이용해서 Security 관련 설정을 하면 된다.
-		SecurityFilterChain chain=httpSecurity
-									
-			    .csrf()
-			    	.disable()
-				.authorizeHttpRequests()
-					.antMatchers("/","/login", "/users/loginform","/users/required_loginform", "/users/login").permitAll()
+		httpSecurity					
+		    .csrf().disable()
+			.authorizeHttpRequests(config->
+				config
+					.antMatchers("/","/users/loginform").permitAll()
 					.antMatchers("/admin").hasRole("ADMIN")
-					.anyRequest().authenticated()
-					.and()
-				.formLogin()
-					.loginPage("/users/required_loginform")
-					.loginProcessingUrl("/login")
-					.usernameParameter("userName")
-					.passwordParameter("password")
-					//.successForwardUrl("/users/login_success")
-					.successHandler(new AuthSuccessHandler())
-					.failureForwardUrl("/users/login_fail")
-					.and()
-				.logout()
+					.anyRequest().authenticated()		
+			)
+			.formLogin(config->
+				config
+				.loginPage("/users/required_loginform")	
+				.loginProcessingUrl("/login")
+				.usernameParameter("userName")
+				.passwordParameter("password")
+				.successHandler(new AuthSuccessHandler())
+				.failureForwardUrl("/users/login_fail")
+				.permitAll()
+			)
+			.logout(config->
+				config
 					.logoutUrl("/users/logout")
 					.logoutSuccessUrl("/")
-					.and()
-				
-				.build();
+					.permitAll()
+			);
 																
-		return chain;
+		return httpSecurity.build();
 	}
 	//비밀번호를 암호화 해주는 객체를 bean 으로 만든다.
 	@Bean

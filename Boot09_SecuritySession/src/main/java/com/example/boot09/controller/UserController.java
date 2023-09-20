@@ -13,9 +13,6 @@ import com.example.boot09.repository.service.CustomUserDetailsService;
 @Controller
 public class UserController {
 	
-	@Autowired
-	private CustomUserDetailsService service;
-	
 	@GetMapping("/admin")
 	@ResponseBody
 	public String admin() {
