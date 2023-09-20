@@ -29,6 +29,7 @@
 		</c:choose>	
 		<ul>
 			<li><a href="/play">놀러가기</a></li>
+			<li><a href="/play?num=1&type=food">GET 방식 파라미터를 가지고 놀러가기</a></li>
 			<li><a href="/admin/user_delete">ADMIN 페이지</a></li>
 			<li><a href="/staff/user_list">STAFF 페이지</a></li>
 		</ul>

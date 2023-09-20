@@ -9,14 +9,17 @@
 <title>/users/login.jsp</title>
 </head>
 <body>
+	
+	<sec:authorize access="isAuthenticated()">
+		<sec:authentication property="principal.username" var="username"/>
+	</sec:authorize>
+	
+	
 	<p>로그인 되었습니다.</p>
-	<p> 
-		<sec:authentication property="principal"/>
-	</p>
-	<p> 
-		<sec:authentication property="principal.username"/> 님 반갑습니다.
-	</p>
-	<a href="/play">놀러가기</a>
+	<p><strong>${username }</strong> 님 반갑습니다. <a href="/play">놀러가기</a></p> 
+
+	<br>
+	<a href="/">인덱스로</a>
 </body>
 </html>
 
