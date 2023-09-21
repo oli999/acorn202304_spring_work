@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -15,8 +16,12 @@ import io.jsonwebtoken.SignatureAlgorithm;
 // Json Web Token 발급 및 인증, 추출에 관련된 기능을 제공하는 유틸 클래스 
 @Service
 public class JwtUtil {
-	//토큰 발급시 서명할 key 
-	private String secret="abcd1234kimgura";
+	
+	//토큰 발급시 서명할 key
+	@Value("${jwt.secret}")
+	private String secret;
+	@Value("${jwt.expiration}")
+	private long expiration;
 	
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
@@ -51,9 +56,9 @@ public class JwtUtil {
     	
         return Jwts.builder()
         		.setClaims(claims)  //토큰에 담을 추가 정보
-        		.setSubject(subject) //토큰의 주제(사용자명 or 사용자의 id) 
+        		.setSubject(subject) //토큰의 주제(사용자명 or 사용자의 id or 기관명 or 기기명) 
         		.setIssuedAt(new Date(System.currentTimeMillis())) // 토큰 발급 시간
-                .setExpiration(new Date(System.currentTimeMillis() + 1000*60*60*24)) //토큰 무효화 되는 시간 
+                .setExpiration(new Date(System.currentTimeMillis() + expiration)) //토큰 무효화 되는 시간 
                 .signWith(SignatureAlgorithm.HS256, secret).compact(); // HS256 알고리즘으로 서명해서 토큰얻어내기
     }
     //토큰 유효성 여부를 리턴하는 메소드 

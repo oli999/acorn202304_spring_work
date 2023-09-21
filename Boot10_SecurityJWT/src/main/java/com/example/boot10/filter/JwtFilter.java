@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,7 +25,9 @@ import com.example.boot10.util.JwtUtil;
 @Component
 public class JwtFilter extends OncePerRequestFilter{
 	
-	
+	//jwt 를 쿠키로 저장할때 쿠키의 이름
+	@Value("${jwt.name}")
+	private String jwtName;
 	//JwtUtil 객체 주입 받기 
 	@Autowired
 	private JwtUtil jwtUtil;
@@ -40,14 +43,13 @@ public class JwtFilter extends OncePerRequestFilter{
         String jwtToken = "";
         if (cookies != null) {
             for (Cookie cookie : cookies) {
-                if ("jwtToken".equals(cookie.getName())) {
+                if (jwtName.equals(cookie.getName())) {
                     jwtToken = cookie.getValue();
                     break;
                 }
             }
         }
         
-        System.out.println(jwtToken);
         //사용자명 
 		String userName=null;
 		// 토큰 Bearer 로 시작 하는지 확인해서 

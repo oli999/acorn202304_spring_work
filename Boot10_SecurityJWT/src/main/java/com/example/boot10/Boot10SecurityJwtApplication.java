@@ -8,12 +8,14 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.example.boot10.entity.User;
 import com.example.boot10.repository.UserRepository;
 
 @SpringBootApplication
+@PropertySource(value = "classpath:custom.properties")
 public class Boot10SecurityJwtApplication {
 	@Autowired
     private UserRepository repository;
